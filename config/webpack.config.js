@@ -1,5 +1,5 @@
-const path = require("path");
 const webpack = require("webpack");
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const paths = require("./paths.js");
 
@@ -9,9 +9,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
+        loader: "babel-loader",
         exclude: /node_modules/,
-        use: { loader: "babel-loader" },
       },
       { test: /\.css$/, use: ["style-loader", "css-loader"] },
       { test: /\.(jpg|png|svg)$/, use: "file-loader" },
@@ -19,6 +19,8 @@ module.exports = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({ template: path.join(paths.srcPath, "index.html") }),
+    new HtmlWebpackPlugin({
+      template: path.join(paths.srcPath, "index.html"),
+    }),
   ],
 };
