@@ -1,7 +1,7 @@
 {
   "result": [
     {
-      "country": "CH",
+      "country": "China",
       "records": [
         { "day": 1, "new": 30, "death": 5, "recovered": 0 },
         { "day": 2, "new": 36, "death": 5, "recovered": 3 },
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "country": "IT",
+      "country": "Italy",
       "records": [
         { "day": 1, "new": 24, "death": 4, "recovered": 9 },
         { "day": 2, "new": 25, "death": 5, "recovered": 4 },
@@ -71,7 +71,7 @@
       ]
     },
     {
-      "country": "US",
+      "country": "USA",
       "records": [
         { "day": 1, "new": 32, "death": 6, "recovered": 8 },
         { "day": 2, "new": 27, "death": 0, "recovered": 9 },
@@ -106,7 +106,7 @@
       ]
     },
     {
-      "country": "SP",
+      "country": "Spain",
       "records": [
         { "day": 1, "new": 30, "death": 0, "recovered": 1 },
         { "day": 2, "new": 38, "death": 7, "recovered": 7 },
