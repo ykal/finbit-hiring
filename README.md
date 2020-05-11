@@ -1,5 +1,6 @@
 # Finbit react developer hiring test
 In this test, you are required to consume an API that returns a JSON data of COVID cases for countries and visualize part of it. 
+The API endpoint is [http://my-json-server.typicode.com/yisehak-awm/finbit-hiring/result](http://my-json-server.typicode.com/yisehak-awm/finbit-hiring/result)
 ![](todo.gif)
 The API returns an array of objects each representing data for a single country. Each object has the following structure
 ```
