@@ -72,4 +72,6 @@ Make sure the form will work if more countries are added to the data.
 
 The pie chart at the bottom shows data for the most affected county. The most affected country is defined as the one with the largest sum of new cases and deaths within the defined duration. 
 
+6. When you are done, send a pull request to the develop branch of this repository.
+
 Good luck!
