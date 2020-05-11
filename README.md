@@ -30,7 +30,7 @@ The ```records``` is an array of daily reports of COVID cases for 30 days. Each 
 2. Clone your fork on your computer
 3. Switch to the ```starter``` branch
 4. Create a new branch named ```develop```.
-5. You will see that we have already implemented a ```LineChart``` and ```PieChart``` components in the ```core``` directory. You are not expected to make changes to those components. Simply import and use them in your code. Both chart components expect a single ```data``` property. The line chart takes an array of objects each having country name as ID and an array of points with day as field ```x``` and number of cases as ```y```. 
+5. You will see that we have already implemented a ```LineChart``` and ```PieChart``` components in the ```core``` directory. You are not expected to make changes to those components. Simply import and use them in your code. Both chart components expect a single ```data``` property. The line chart takes an array of objects each having country name as ID and an array of points with day as field ```x``` and number of new cases as ```y```. 
 ```
 [
  {
@@ -38,11 +38,11 @@ The ```records``` is an array of daily reports of COVID cases for 30 days. Each 
     "data": [
       {
         "x": 1,
-        "y": 130
+        "y": 13
       },
       {
         "x": 2,
-        "y": 96
+        "y": 9
       },
       ...
 ]
@@ -70,7 +70,7 @@ The pie chart takes an array of 3 objects as following
 You will prepare a form that lets the user filter the data by selecting countries and specifying start and end days.
 Make sure the form will work if more countries are added to the data.
 
-The pie chart at the bottom shows data for the most affected county. The most affected country is defined as the one with the largest sum of new cases and deaths within the defined duration. 
+The pie chart at the bottom shows data for the most affected county. The most affected country is defined as the one with the largest difference between total cases and recoveries within the defined duration. 
 
 6. When you are done, send a pull request to the develop branch of this repository.
 
