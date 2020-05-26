@@ -8,11 +8,27 @@ export const filterCaseDataByCountries = (caseData, selectedCountries) => {
   return caseData.filter((data) => selectedCountries.includes(data.country));
 };
 
+export const filterCountryCaseByDateRange = (countryData, dateRange) => {
+  if (!countryData || !dateRange) return [];
+  return {
+    country: countryData.country,
+    records: countryData.records.filter(
+      (record) => record.day <= dateRange.end && record.day >= dateRange.start
+    ),
+  };
+};
+
+export const filterCaseByDateRange = (caseData, dateRange) => {
+  if (!caseData || !dateRange) return [];
+  return caseData.map((data) => filterCountryCaseByDateRange(data, dateRange));
+};
+
 export const formatCountryDataForLineChart = (countryData) =>
   countryData.map((item) => ({ y: item.new, x: item.day }));
 
-export const getDataForLineChart = (caseData, selectedCountries) => {
-  const filteredData = filterCaseDataByCountries(caseData, selectedCountries);
+export const getDataForLineChart = (caseData, selectedCountries, dateRange) => {
+  let filteredData = filterCaseDataByCountries(caseData, selectedCountries);
+  filteredData = filterCaseByDateRange(filteredData, dateRange);
   return filteredData.map((item) => ({
     id: item.country,
     data: formatCountryDataForLineChart(item.records),
@@ -39,9 +55,12 @@ export const getTotalNumberOfCasesByType = (caseData, caseType, caseLabel) => {
   };
 };
 
-export const getDataForPieChart = (caseData, selectedCountries) => {
-  const filteredData = filterCaseDataByCountries(caseData, selectedCountries);
+export const getDataForPieChart = (caseData, selectedCountries, dateRange) => {
+  let filteredData = filterCaseDataByCountries(caseData, selectedCountries);
+  filteredData = filterCaseByDateRange(filteredData, dateRange);
   return CASE_TYPES.map((type) =>
     getTotalNumberOfCasesByType(filteredData, type.name, type.label)
   );
 };
+
+export const range = (n) => Array.from({ length: n }, (value, key) => key);

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import LineChart from "./core/LineChart";
 import PieChart from "./core/PieChart";
-import { getData, getDataForLineChart, getDataForPieChart } from "./utils";
+import {
+  getData,
+  getDataForLineChart,
+  getDataForPieChart,
+  range,
+} from "./utils";
 import "./style.css";
 import { COUNTRIES } from "./constants";
 
@@ -22,6 +27,10 @@ const Checkbox = ({ id, value, isSelected, onChange }) => (
 const App = (props) => {
   const [caseData, setCaseData] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([...COUNTRIES]);
+  const [dateRange, setDateRange] = useState({
+    start: 1,
+    end: 30,
+  });
 
   useEffect(() => {
     getData().then((res) => {
@@ -38,6 +47,12 @@ const App = (props) => {
     setSelectedCountries([...tempSelectedCountries]);
   };
 
+  const renderSelectOptions = (n) => {
+    return range(n).map((date) => (
+      <option key={date} value={date + 1} label={date + 1} />
+    ));
+  };
+
   const renderCheckboxes = () =>
     COUNTRIES.map((country) => (
       <Checkbox
@@ -48,12 +63,51 @@ const App = (props) => {
       />
     ));
 
+  const handleDateRangeChange = (event, rangeType) => {
+    const value = event && event.target && event.target.value;
+    value &&
+      rangeType === "startDate" &&
+      setDateRange((prevState) => ({
+        ...prevState,
+        start: parseInt(value),
+      }));
+    value &&
+      rangeType === "endDate" &&
+      setDateRange((prevState) => ({
+        ...prevState,
+        end: parseInt(value),
+      }));
+  };
+
   return (
     <div>
-      <h4>Countries</h4>
-      {renderCheckboxes()}
-      <LineChart data={getDataForLineChart(caseData, selectedCountries)} />
-      <PieChart data={getDataForPieChart(caseData, selectedCountries)} />
+      <div>
+        <h4>Countries</h4>
+        {renderCheckboxes()}
+      </div>
+      <br />
+      <div>
+        <span> Start Date </span>
+        <select
+          onChange={(event) => handleDateRangeChange(event, "startDate")}
+          value={dateRange.start}
+        >
+          {renderSelectOptions(30)}
+        </select>
+        <span> End Date </span>
+        <select
+          onChange={(event) => handleDateRangeChange(event, "endDate")}
+          value={dateRange.end}
+        >
+          {renderSelectOptions(30)}
+        </select>
+      </div>
+      <LineChart
+        data={getDataForLineChart(caseData, selectedCountries, dateRange)}
+      />
+      <PieChart
+        data={getDataForPieChart(caseData, selectedCountries, dateRange)}
+      />
     </div>
   );
 };
