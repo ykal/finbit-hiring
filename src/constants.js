@@ -12,3 +12,5 @@ export const CASE_TYPES = [
     label: "Recoveries",
   },
 ];
+
+export const COUNTRIES = ["China", "Spain", "USA", "Italy"];

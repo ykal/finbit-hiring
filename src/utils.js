@@ -3,11 +3,17 @@ import { CASE_TYPES } from "./constants";
 
 export const getData = () => Api("/", "GET");
 
+export const filterCaseDataByCountries = (caseData, selectedCountries) => {
+  if (!selectedCountries || selectedCountries.length === 0) return [];
+  return caseData.filter((data) => selectedCountries.includes(data.country));
+};
+
 export const formatCountryDataForLineChart = (countryData) =>
   countryData.map((item) => ({ y: item.new, x: item.day }));
 
-export const getDataForLineChart = (caseData) => {
-  return caseData.map((item) => ({
+export const getDataForLineChart = (caseData, selectedCountries) => {
+  const filteredData = filterCaseDataByCountries(caseData, selectedCountries);
+  return filteredData.map((item) => ({
     id: item.country,
     data: formatCountryDataForLineChart(item.records),
   }));
@@ -33,8 +39,9 @@ export const getTotalNumberOfCasesByType = (caseData, caseType, caseLabel) => {
   };
 };
 
-export const getDataForPieChart = (caseData) => {
+export const getDataForPieChart = (caseData, selectedCountries) => {
+  const filteredData = filterCaseDataByCountries(caseData, selectedCountries);
   return CASE_TYPES.map((type) =>
-    getTotalNumberOfCasesByType(caseData, type.name, type.label)
+    getTotalNumberOfCasesByType(filteredData, type.name, type.label)
   );
 };
