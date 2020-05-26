@@ -7,7 +7,7 @@ import {
   getDataForPieChart,
   range,
   getMostInfectedCountry,
-  getMaximumInfectedCountry,
+  filterCaseData,
 } from "./utils";
 import "./style.css";
 import { COUNTRIES } from "./constants";
@@ -81,17 +81,26 @@ const App = (props) => {
       }));
   };
 
-  const renderMaximumInfectedCountry = () => {
-    const mostInfectedCountry = getMostInfectedCountry(
-      caseData,
-      selectedCountries,
-      dateRange
-    );
+  const renderMaximumInfectedCountry = (data) => {
+    const mostInfectedCountry = getMostInfectedCountry(data);
     return (
       <>
         <h6>Most infected country</h6>
         <p>{(mostInfectedCountry && mostInfectedCountry.country) || "None"} </p>
       </>
+    );
+  };
+
+  const renderChart = (caseData) => {
+    const data = filterCaseData(caseData, selectedCountries, dateRange);
+    return data && data.length > 0 ? (
+      <>
+        <LineChart data={getDataForLineChart(data)} />
+        {renderMaximumInfectedCountry(data)}
+        <PieChart data={getDataForPieChart(data)} />
+      </>
+    ) : (
+      <h6>No data displayed</h6>
     );
   };
 
@@ -118,13 +127,7 @@ const App = (props) => {
           {renderSelectOptions(30)}
         </select>
       </div>
-      <LineChart
-        data={getDataForLineChart(caseData, selectedCountries, dateRange)}
-      />
-      {renderMaximumInfectedCountry()}
-      <PieChart
-        data={getDataForPieChart(caseData, selectedCountries, dateRange)}
-      />
+      {renderChart(caseData)}
     </div>
   );
 };

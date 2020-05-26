@@ -23,7 +23,7 @@ export const filterCaseByDateRange = (caseData, dateRange) => {
   return caseData.map((data) => filterCountryCaseByDateRange(data, dateRange));
 };
 
-const filterCaseData = (caseData, selectedCountries, dateRange) => {
+export const filterCaseData = (caseData, selectedCountries, dateRange) => {
   let filteredData = filterCaseDataByCountries(caseData, selectedCountries);
   filteredData = filterCaseByDateRange(filteredData, dateRange);
   return filteredData;
@@ -32,9 +32,8 @@ const filterCaseData = (caseData, selectedCountries, dateRange) => {
 export const formatCountryDataForLineChart = (countryData) =>
   countryData.map((item) => ({ y: item.new, x: item.day }));
 
-export const getDataForLineChart = (caseData, selectedCountries, dateRange) => {
-  const filteredData = filterCaseData(caseData, selectedCountries, dateRange);
-  return filteredData.map((item) => ({
+export const getDataForLineChart = (caseData) => {
+  return caseData.map((item) => ({
     id: item.country,
     data: formatCountryDataForLineChart(item.records),
   }));
@@ -60,10 +59,9 @@ export const getTotalNumberOfCasesByType = (caseData, caseType, caseLabel) => {
   };
 };
 
-export const getDataForPieChart = (caseData, selectedCountries, dateRange) => {
-  const filteredData = filterCaseData(caseData, selectedCountries, dateRange);
+export const getDataForPieChart = (caseData) => {
   return CASE_TYPES.map((type) =>
-    getTotalNumberOfCasesByType(filteredData, type.name, type.label)
+    getTotalNumberOfCasesByType(caseData, type.name, type.label)
   );
 };
 
@@ -89,13 +87,8 @@ export const getMaximumInfectedCountry = (caseData) => {
   return data;
 };
 
-export const getMostInfectedCountry = (
-  caseData,
-  selectedCountries,
-  dateRange
-) => {
-  const filteredData = filterCaseData(caseData, selectedCountries, dateRange);
-  const totalInfectionDataOfCountries = getMaximumInfectedCountry(filteredData);
+export const getMostInfectedCountry = (caseData) => {
+  const totalInfectionDataOfCountries = getMaximumInfectedCountry(caseData);
   let maximumInfectedCountry = {
     country: "None",
     total: -Infinity,
