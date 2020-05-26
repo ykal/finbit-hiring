@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LineChart from "./core/LineChart";
 import PieChart from "./core/PieChart";
-import { getData, getDataForLineChart } from "./utils";
+import { getData, getDataForLineChart, getDataForPieChart } from "./utils";
 import "./style.css";
 
 const App = (props) => {
@@ -16,6 +16,7 @@ const App = (props) => {
   return (
     <div>
       <LineChart data={getDataForLineChart(caseData)} />
+      <PieChart data={getDataForPieChart(caseData)} />
     </div>
   );
 };
